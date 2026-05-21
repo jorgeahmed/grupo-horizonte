@@ -31,9 +31,12 @@ git push -u origin main
 
 En el repo → **Settings** → **Pages**:
 
-- **Source:** GitHub Actions
+- **Source:** Deploy from a branch
+- **Branch:** `gh-pages` → carpeta `/ (root)`
 
-El workflow `.github/workflows/deploy.yml` publica automáticamente en cada push a `main`.
+El workflow sube el **build compilado** a la rama `gh-pages` en cada push a `main`.
+
+> Si la página se ve en blanco, casi siempre es porque Pages está sirviendo la rama `main` (código fuente) en lugar de `gh-pages` (build).
 
 ### URL publicada
 
