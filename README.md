@@ -44,24 +44,28 @@ El workflow sube el **build compilado** a la rama `gh-pages` en cada push a `mai
 
 `https://jorgeahmed.github.io/grupo-horizonte/`
 
-## Google Analytics (tráfico)
+## Google Tag Manager y Analytics
 
-1. Crea una propiedad en [Google Analytics](https://analytics.google.com/) (GA4).
-2. Copia el **ID de medición** (formato `G-XXXXXXXXXX`).
-3. En GitHub → repo **grupo-horizonte** → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
-   - Nombre: `VITE_GA_MEASUREMENT_ID`
-   - Valor: tu ID `G-...`
-4. Haz un push a `main` (o re-ejecuta el workflow **Deploy to GitHub Pages**) para que el build incluya Analytics.
+| Herramienta | ID |
+|-------------|-----|
+| **Google Tag Manager** | `GTM-WZRPRS29` (en `index.html`) |
+| **Google Analytics 4** | `G-Q4SKSB1M70` |
 
-**Local:** copia `.env.example` a `.env` y pega tu ID:
+### En GTM (recomendado)
+1. Entra a [tagmanager.google.com](https://tagmanager.google.com/) → contenedor **GTM-WZRPRS29**.
+2. Crea una etiqueta **Google Analytics: GA4 Configuration** con ID `G-Q4SKSB1M70`.
+3. Crea un activador **History Change** o usa el evento personalizado `page_view` del `dataLayer` (la SPA ya lo envía).
+4. Publica el contenedor.
 
-```bash
-cp .env.example .env
-# Edita VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-npm run dev
-```
+### Eventos que envía la web al `dataLayer`
+- `page_view` — cada cambio de ruta (inicio, obras, ventas, CRM, ERP…)
+- `generate_lead` — envío del formulario de cotizar
 
-La app registra automáticamente cada cambio de página (SPA) y el envío del formulario de cotización (`generate_lead`).
+### GitHub Actions (opcional)
+Secret `VITE_GA_MEASUREMENT_ID` = `G-Q4SKSB1M70` si quieres sobreescribir el ID en build.
+
+**Probar:** [Google Tag Assistant](https://tagassistant.google.com/) o vista **Vista previa** en GTM con la URL  
+`https://jorgeahmed.github.io/grupo-horizonte/`
 
 ## Estructura
 

@@ -29,7 +29,10 @@ export default function CotizacionForm() {
   const handleSubmit = (e) => {
     e.preventDefault()
     setStatus('submitting')
-    setTimeout(() => setStatus('success'), 1200)
+    setTimeout(() => {
+      setStatus('success')
+      trackEvent('generate_lead', { form_name: 'cotizar_proyecto' })
+    }, 1200)
   }
 
   const resetForm = () => {

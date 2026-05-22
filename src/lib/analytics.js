@@ -1,41 +1,49 @@
-const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID
+/** GTM instalado en index.html — ID: GTM-WZRPRS29 */
+export const GTM_ID = 'GTM-WZRPRS29'
+
+/** GA4 — configurar también como etiqueta en GTM con este ID */
+export const GA_MEASUREMENT_ID =
+  import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-Q4SKSB1M70'
+
+function pushDataLayer(payload) {
+  if (typeof window === 'undefined') return
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push(payload)
+}
 
 export function isAnalyticsEnabled() {
-  return Boolean(GA_ID && typeof window !== 'undefined')
+  return typeof window !== 'undefined'
 }
 
 export function initAnalytics() {
   if (!isAnalyticsEnabled()) return
 
-  if (window.gtag) return
-
-  const script = document.createElement('script')
-  script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`
-  document.head.appendChild(script)
-
-  window.dataLayer = window.dataLayer || []
-  window.gtag = function gtag() {
-    window.dataLayer.push(arguments)
-  }
-  window.gtag('js', new Date())
-  window.gtag('config', GA_ID, {
-    send_page_view: false,
-    anonymize_ip: true,
+  pushDataLayer({
+    event: 'app_initialized',
+    ga_measurement_id: GA_MEASUREMENT_ID,
+    gtm_id: GTM_ID,
   })
 }
 
+/** Compatible con SPA + Google Tag Manager */
 export function trackPageView(path) {
-  if (!isAnalyticsEnabled() || !window.gtag) return
+  if (!isAnalyticsEnabled()) return
 
   const pagePath = path.startsWith('/') ? path : `/${path}`
-  window.gtag('event', 'page_view', {
+
+  pushDataLayer({
+    event: 'page_view',
     page_path: pagePath,
     page_title: document.title,
+    page_location: window.location.href,
   })
 }
 
-export function trackEvent(action, params = {}) {
-  if (!isAnalyticsEnabled() || !window.gtag) return
-  window.gtag('event', action, params)
+export function trackEvent(eventName, params = {}) {
+  if (!isAnalyticsEnabled()) return
+
+  pushDataLayer({
+    event: eventName,
+    ...params,
+  })
 }
