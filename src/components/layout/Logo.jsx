@@ -11,15 +11,15 @@ export default function Logo({ variant = 'light' }) {
       aria-label="Grupo Horizonte — Ir al inicio"
     >
       <Building2
-        className={`h-8 w-8 ${isDark ? 'text-blue-500' : 'text-blue-700'}`}
+        className={`h-8 w-8 ${isDark ? 'text-brand-accent' : 'text-brand'}`}
       />
       <span
-        className={`ml-2 text-2xl font-bold tracking-tight ${
+        className={`ml-2 text-2xl font-bold tracking-tight font-heading ${
           isDark ? 'text-white' : 'text-slate-900'
         }`}
       >
         Grupo
-        <span className={isDark ? 'text-blue-500' : 'text-blue-700'}>Horizonte</span>
+        <span className={isDark ? 'text-brand-accent' : 'text-brand'}>Horizonte</span>
       </span>
     </Link>
   )

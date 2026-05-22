@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom'
 import { NAV_ITEMS } from '../../data/site'
 
 const linkClass = ({ isActive }) =>
-  `text-sm font-medium transition-colors hover:text-blue-600 ${
-    isActive ? 'text-blue-700 font-bold' : 'text-slate-600'
+  `text-sm font-medium transition-colors hover:text-brand-accent ${
+    isActive ? 'text-brand font-bold' : 'text-slate-600'
   }`
 
 export default function NavLinks({ onNavigate }) {

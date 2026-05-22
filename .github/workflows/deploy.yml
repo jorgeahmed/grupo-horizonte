@@ -20,7 +20,10 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
+      - name: Build con Google Analytics
+        run: npm run build
+        env:
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
 
       - name: Publicar build en rama gh-pages
         uses: JamesIves/github-pages-deploy-action@v4

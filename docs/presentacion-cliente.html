@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grupo Horizonte — Propuesta digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: rgba(30, 41, 59, 0.55);
+      --border: rgba(148, 163, 184, 0.15);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --blue: #3b82f6;
+      --blue-dark: #1d4ed8;
+      --green: #34d399;
+      --amber: #fbbf24;
+      --violet: #a78bfa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(29, 78, 216, 0.35), transparent),
+        radial-gradient(ellipse 60% 40% at 90% 80%, rgba(52, 211, 153, 0.12), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.5rem;
+      background: rgba(7, 11, 20, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar a {
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    .topbar a:hover { color: #93c5fd; }
+    .progress {
+      display: flex;
+      gap: 0.35rem;
+    }
+    .progress span {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #334155;
+    }
+    .slide {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 5rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    @media (min-width: 768px) {
+      .slide { padding: 5rem 3rem 4rem; }
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: #fff;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      width: fit-content;
+    }
+    h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    h1 em { font-style: italic; color: #93c5fd; }
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    h2 span { color: var(--blue); }
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #93c5fd;
+      margin: 1.25rem 0 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .lead {
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: var(--muted);
+      max-width: 42rem;
+    }
+    p { color: #cbd5e1; max-width: 52rem; margin-bottom: 0.75rem; }
+    ul { margin: 0.75rem 0 0 1.25rem; color: #cbd5e1; }
+    li { margin-bottom: 0.5rem; max-width: 52rem; }
+    .grid-2 {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 640px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+    .grid-3 {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+    .card.featured {
+      border-color: rgba(59, 130, 246, 0.45);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2), 0 20px 40px -20px rgba(29, 78, 216, 0.35);
+    }
+    .card h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .card .amount {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--green);
+    }
+    .card .hours {
+      font-size: 0.9rem;
+      color: #93c5fd;
+      margin-top: 0.25rem;
+    }
+    .card .rate {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      max-width: 52rem;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: rgba(30, 41, 59, 0.8);
+      color: #93c5fd;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    tr:last-child td { border-bottom: none; }
+    td { background: rgba(15, 23, 42, 0.5); }
+    .hl { color: var(--green); font-weight: 700; }
+    .warn { color: var(--amber); }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+    .pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.65rem 1rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .pill strong { display: block; color: var(--blue); font-size: 0.75rem; margin-bottom: 0.15rem; }
+    .arrow { color: #475569; font-size: 1.25rem; }
+    .note {
+      margin-top: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: rgba(251, 191, 36, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #fde68a;
+      max-width: 52rem;
+    }
+    .note.blue {
+      background: rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: #bfdbfe;
+    }
+    .note.green {
+      background: rgba(52, 211, 153, 0.08);
+      border-color: rgba(52, 211, 153, 0.3);
+      color: #a7f3d0;
+    }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 1rem; }
+    .table-wrap table { min-width: 520px; }
+    @media (max-width: 640px) {
+      .slide { padding: 4.5rem 1rem 3rem; }
+      .flow { flex-direction: column; align-items: stretch; }
+      .arrow { display: none; }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      max-width: 52rem;
+    }
+    .step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 10px;
+      background: var(--blue-dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .cover { text-align: left; }
+    .cover .logo-mark {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--blue), #6366f1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    @media print {
+      .topbar, .progress { display: none; }
+      .slide { min-height: auto; page-break-after: always; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="../">← Volver al sitio</a>
+    <nav class="progress" aria-hidden="true" id="progress-dots"></nav>
+  </header>
+
+  <!-- SLIDE 1 -->
+  <section class="slide cover" id="s1">
+    <div class="logo-mark">🏗</div>
+    <span class="tag">Propuesta comercial · 2026</span>
+    <h1>De la página web al <em>sistema integral</em> en línea</h1>
+    <p class="lead">Grupo Horizonte — Qué ofrecemos, cuánto cuesta y cómo crece su negocio digital paso a paso.</p>
+    <p style="margin-top:1.5rem;font-size:0.95rem;color:var(--muted);">Web fija · Web dinámica · CRM · ERP · Consultoría basada en datos</p>
+  </section>
+
+  <!-- SLIDE 2 -->
+  <section class="slide" id="s2">
+    <span class="tag">Contexto</span>
+    <h2>“Quiero una página” <span>no es una sola cosa</span></h2>
+    <div class="flow">
+      <div class="pill"><strong>Fija</strong>Aquí estamos</div>
+      <span class="arrow">→</span>
+      <div class="pill"><strong>Dinámica</strong>Encuéntrennos</div>
+      <span class="arrow">→</span>
+      <div class="pill"><strong>CRM</strong>Organizamos ventas</div>
+      <span class="arrow">→</span>
+      <div class="pill"><strong>ERP</strong>Operamos todo</div>
+    </div>
+    <p style="margin-top:1.5rem;">Cada nivel resuelve un problema distinto. Esta propuesta explica todo sin tecnicismos y con precios claros.</p>
+  </section>
+
+  <!-- SLIDE 3 -->
+  <section class="slide" id="s3">
+    <span class="tag">Etapa 0 · Mes 1</span>
+    <h2>Lo que recibe <span>hoy</span> (sin costo)</h2>
+    <p>Página web <strong>fija</strong> de presentación — como la demo en línea, con <span class="hl">sus datos reales</span>.</p>
+    <table>
+      <tr><th>Concepto</th><th>Detalle</th></tr>
+      <tr><td>Inversión mes 1</td><td class="hl">USD 0</td></tr>
+      <tr><td>Valor de regalo</td><td>Página corporativa sin soporte: <strong>USD 1,000</strong></td></tr>
+      <tr><td>Incluye</td><td>Obras, ventas, bolsa de trabajo, formulario de cotización</td></tr>
+      <tr><td>Objetivo</td><td>Enamorarse del resultado antes de la suscripción</td></tr>
+    </table>
+  </section>
+
+  <!-- SLIDE 4 -->
+  <section class="slide" id="s4">
+    <span class="tag">Honestidad comercial</span>
+    <h2 class="warn">Tráfico ≠ ventas</h2>
+    <p>Puede haber visitas y <strong>cero ventas en línea</strong> si aún no existe un modelo de negocio web.</p>
+    <ul>
+      <li>Sin catálogo (propiedades, maquinaria, servicios de proveedores)</li>
+      <li>Sin proceso claro de cotización o compra</li>
+      <li>Sin seguimiento a quien llena el formulario</li>
+    </ul>
+    <div class="note green">
+      Primero generamos <strong>datos y negocio en línea</strong>. Sin datos no hay consultoría seria ni mejoras informadas.
+    </div>
+  </section>
+
+  <!-- SLIDE 5 PRICING -->
+  <section class="slide" id="s5">
+    <span class="tag">Inversión y horas</span>
+    <h2>Planes, horas y <span>costo por hora</span></h2>
+    <p>Tarifa de referencia del servicio: <strong class="hl">USD 12.50 / hora</strong>. Los paquetes incluyen horas semanales con precio mensual cerrado.</p>
+
+    <div class="grid-3">
+      <div class="card featured">
+        <h4>Web dinámica + SEO</h4>
+        <div class="amount">USD 850</div>
+        <div class="hours">Hasta <strong>20 h / semana</strong> · 80 h / mes</div>
+        <div class="rate">≈ USD 10.63 / h efectiva<br><span style="color:var(--green)">Paquete de entrada</span></div>
+      </div>
+      <div class="card">
+        <h4>CRM</h4>
+        <div class="amount">USD 1,500</div>
+        <div class="hours">Hasta <strong>30 h / semana</strong> · 120 h / mes</div>
+        <div class="rate">= USD 12.50 / h<br>Tarifa de referencia</div>
+      </div>
+      <div class="card">
+        <h4>ERP · Plataforma completa</h4>
+        <div class="amount">USD 2,500</div>
+        <div class="hours">Hasta <strong>40 h / semana</strong> · 160 h / mes</div>
+        <div class="rate">≈ USD 15.63 / h efectiva<br>Máximo alcance operativo</div>
+      </div>
+    </div>
+
+    <table style="margin-top:1.5rem;">
+      <tr>
+        <th>Plan</th><th>Mensual</th><th>h/semana</th><th>h/mes</th><th>USD / hora</th>
+      </tr>
+      <tr><td>Web dinámica</td><td>850</td><td>20</td><td>80</td><td>~10.63</td></tr>
+      <tr><td>CRM</td><td>1,500</td><td>30</td><td>120</td><td>12.50</td></tr>
+      <tr><td>ERP integral</td><td>2,500</td><td>40</td><td>160</td><td>~15.63</td></tr>
+    </table>
+    <p style="margin-top:1rem;font-size:0.85rem;color:var(--muted);">Mes 2 inicia suscripción web (USD 850). CRM y ERP según madurez del proyecto.</p>
+  </section>
+
+  <!-- SLIDE 6 WEB DINAMICA -->
+  <section class="slide" id="s6">
+    <span class="tag">Producto · USD 850/mes</span>
+    <h2>Web dinámica + <span>consultoría basada en datos</span></h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Incluido en el proyecto</h3>
+        <ul style="margin:0;list-style:none;">
+          <li>✓ Formularios personalizados (cotizar, contacto, etc.)</li>
+          <li>✓ Menús y secciones a la medida</li>
+          <li>✓ SEO activo y marketing digital</li>
+          <li>✓ Hasta 20 horas por semana dedicadas</li>
+          <li>✓ Dashboards y métricas mensuales</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Consultoría (no solo diseño)</h3>
+        <p style="margin:0;font-size:0.95rem;">Si con los datos vemos que conviene, propondremos por ejemplo:</p>
+        <ul style="margin-top:0.5rem;">
+          <li>Venta en línea de productos de sus mejores proveedores</li>
+          <li>Sistemas con IA que guíen al cliente hacia la compra</li>
+          <li>Nuevos embudos o landings según el tráfico real</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note blue">
+      <strong>Regla de oro:</strong> primero hay que <strong>generar datos</strong> (visitas, formularios, comportamiento). Solo entonces podemos analizar y recomendar mejoras con fundamento.
+    </div>
+  </section>
+
+  <!-- SLIDE 7 REPORTES Y AUTORIZACION -->
+  <section class="slide" id="s7">
+    <span class="tag">Gobernanza del proyecto</span>
+    <h2>Reportes trimestrales y <span>autorización del cliente</span></h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div>
+          <strong>Generamos datos</strong> — tráfico, conversiones, formularios, catálogo, campañas.
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div>
+          <strong>Reporte trimestral</strong> — analizamos qué vemos y proponemos mejoras concretas basadas en evidencia.
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div>
+          <strong>Sistema de autorización</strong> — ninguna mejora mayor se implementa sin su visto bueno. Usted decide ritmo e inversión.
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:1rem;">Objetivo mes 3 (web): acercarse al <span class="hl">~90%</span> en análisis SEO técnicos. Las ventas en línea dependen también de construir el negocio, no solo del tráfico.</p>
+  </section>
+
+  <!-- SLIDE 8 CRM -->
+  <section class="slide" id="s8">
+    <span class="tag">CRM · USD 1,500/mes</span>
+    <h2>¿Qué es el <span>CRM</span>?</h2>
+    <p><strong>Customer Relationship Management</strong> — organiza cada prospecto y su etapa comercial.</p>
+    <p style="margin:1rem 0;font-weight:600;color:#93c5fd;">Nuevo → Contactado → Cotización → Negociación → Ganado / Perdido</p>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Hasta 30 h / semana</h4>
+        <p style="margin:0;font-size:0.9rem;">USD 12.50 / h · 120 h al mes</p>
+      </div>
+      <div class="card">
+        <h4>Comunicación dirigida</h4>
+        <ul style="margin:0.25rem 0 0 1rem;font-size:0.9rem;">
+          <li>Clientes: seguimiento y historial</li>
+          <li>Empleados: tareas y alertas</li>
+          <li>Proveedores: cotizaciones (fase avanzada)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note" style="margin-top:1rem;border-color:rgba(251,191,36,0.4);background:rgba(251,191,36,0.08);color:#fde68a;">
+      <strong>Riesgo / alcance CRM:</strong> cotizaciones con IA, automatizaciones complejas o integraciones externas
+      <em>no vienen listas</em> en el paquete base. Requieren planeación, ejecución y pruebas adicionales.
+    </div>
+    <p class="note">El CRM no reemplaza al ERP: ordena <strong>ventas y relaciones</strong>. Pruebe la demo con login en el sitio web.</p>
+  </section>
+
+  <!-- SLIDE 9 ERP -->
+  <section class="slide" id="s9">
+    <span class="tag">ERP · USD 2,500/mes</span>
+    <h2>¿Qué es el <span>ERP</span>?</h2>
+    <p>Sistema que opera la empresa en internet: obras, compras, inventario, ventas, finanzas, RH.</p>
+    <div class="card" style="margin-top:1rem;max-width:32rem;">
+      <h4>Hasta 40 h / semana · 160 h / mes</h4>
+      <div class="rate">≈ USD 15.63 / hora efectiva del paquete</div>
+    </div>
+    <p style="margin-top:1.25rem;"><strong>Flujo:</strong> Web capta → CRM organiza ventas → ERP ejecuta y factura → dashboards para dirección.</p>
+    <div class="note" style="margin-top:1rem;border-color:rgba(251,191,36,0.4);background:rgba(251,191,36,0.08);color:#fde68a;">
+      <strong>Riesgo / alcance ERP:</strong> módulos a medida, IA operativa o flujos multi-área elevan tiempo de desarrollo
+      y validación. Las horas del plan son <strong>referencia</strong>, no garantía de cualquier funcionalidad sin cotizar aparte.
+    </div>
+  </section>
+
+  <!-- SLIDE 9B RIESGOS -->
+  <section class="slide" id="s9b">
+    <span class="tag">Transparencia</span>
+    <h2>Riesgos, alcance y <span>tiempo real</span></h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Lo que son referencias</h3>
+        <ul style="margin:0;">
+          <li>Horas semanales por plan (20 / 30 / 40)</li>
+          <li>Precios mensuales (USD 850 / 1,500 / 2,500)</li>
+          <li>Costo por hora estimado del paquete</li>
+          <li>Ofertas y ejemplos de esta presentación</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Lo que exige más trabajo</h3>
+        <ul style="margin:0;">
+          <li>Cotizaciones con IA para responder rápido</li>
+          <li>Catálogos masivos de proveedores</li>
+          <li>Integraciones contables, bancarias, WhatsApp API</li>
+          <li>Portales para clientes o proveedores</li>
+        </ul>
+      </div>
+    </div>
+    <div class="steps" style="margin-top:1.5rem;">
+      <div class="step">
+        <span class="step-num">!</span>
+        <div>
+          <strong>Cada solución elaborada</strong> pasa por: definición → ejecución → pruebas → autorización del cliente.
+          A mayor complejidad, más tiempo fuera del paquete base.
+        </div>
+      </div>
+    </div>
+    <p class="note blue" style="margin-top:1rem;">
+      Por eso los reportes trimestrales proponen mejoras con datos, pero <strong>usted autoriza</strong> qué se construye y cuándo.
+    </p>
+  </section>
+
+  <!-- SLIDE 10 PLAN -->
+  <section class="slide" id="s10">
+    <span class="tag">Roadmap 12 meses</span>
+    <h2>Plan de <span>trabajo</span></h2>
+    <table>
+      <tr><th>Fase</th><th>Periodo</th><th>Inversión</th><th>Entregable</th></tr>
+      <tr><td>0</td><td>Mes 1</td><td class="hl">USD 0</td><td>Página fija + plan negocio web</td></tr>
+      <tr><td>1</td><td>Meses 2–4</td><td>USD 850/mes</td><td>Web dinámica, SEO, datos, reportes</td></tr>
+      <tr><td>2</td><td>Meses 5–8</td><td>USD 1,500/mes</td><td>CRM y automatización comercial</td></tr>
+      <tr><td>3</td><td>Meses 9–12+</td><td>USD 2,500/mes</td><td>ERP · plataforma integral</td></tr>
+    </table>
+  </section>
+
+  <!-- SLIDE 11 CIERRE -->
+  <section class="slide cover" id="s11">
+    <span class="tag">Resumen</span>
+    <h2>Listo para <em>arrancar</em></h2>
+    <table>
+      <tr><th>Etapa</th><th>Pago</th><th>Horas / semana</th></tr>
+      <tr><td>Página fija (mes 1)</td><td class="hl">USD 0 · regalo 1,000</td><td>—</td></tr>
+      <tr><td>Web dinámica (mes 2+)</td><td class="hl">USD 850</td><td>20 h</td></tr>
+      <tr><td>CRM</td><td class="hl">USD 1,500</td><td>30 h</td></tr>
+      <tr><td>ERP completo</td><td class="hl">USD 2,500</td><td>40 h</td></tr>
+    </table>
+    <p style="margin-top:2rem;font-size:1.15rem;color:#fff;">Próximo paso: personalizar la demo, kick-off mes 2 y empezar a generar los datos que alimentarán cada mejora.</p>
+  </section>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const progressNav = document.getElementById('progress-dots');
+    slides.forEach(() => {
+      const dot = document.createElement('span');
+      progressNav.appendChild(dot);
+    });
+    const dots = progressNav.querySelectorAll('span');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const i = [...slides].indexOf(e.target);
+          dots.forEach((d, j) => {
+            d.style.background = j === i ? '#3b82f6' : '#334155';
+          });
+        }
+      });
+    }, { threshold: 0.45 });
+    slides.forEach((s) => obs.observe(s));
+  </script>
+</body>
+</html>

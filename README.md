@@ -9,7 +9,9 @@ npm install
 npm run dev
 ```
 
-Abre `http://localhost:5173`
+Abre `http://localhost:5173/grupo-horizonte/` (el proyecto usa base `/grupo-horizonte/`)
+
+Formulario de cotización: `http://localhost:5173/grupo-horizonte/cotizar`
 
 ## Publicar en GitHub Pages
 
@@ -40,7 +42,26 @@ El workflow sube el **build compilado** a la rama `gh-pages` en cada push a `mai
 
 ### URL publicada
 
-`https://TU_USUARIO.github.io/grupo-horizonte/`
+`https://jorgeahmed.github.io/grupo-horizonte/`
+
+## Google Analytics (tráfico)
+
+1. Crea una propiedad en [Google Analytics](https://analytics.google.com/) (GA4).
+2. Copia el **ID de medición** (formato `G-XXXXXXXXXX`).
+3. En GitHub → repo **grupo-horizonte** → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
+   - Nombre: `VITE_GA_MEASUREMENT_ID`
+   - Valor: tu ID `G-...`
+4. Haz un push a `main` (o re-ejecuta el workflow **Deploy to GitHub Pages**) para que el build incluya Analytics.
+
+**Local:** copia `.env.example` a `.env` y pega tu ID:
+
+```bash
+cp .env.example .env
+# Edita VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+npm run dev
+```
+
+La app registra automáticamente cada cambio de página (SPA) y el envío del formulario de cotización (`generate_lead`).
 
 ## Estructura
 

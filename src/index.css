@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+:root {
+  --brand-primary: #1d4ed8;
+  --brand-primary-hover: #1e40af;
+  --brand-accent: #3b82f6;
+  --brand-muted: #dbeafe;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-heading: 'DM Sans', system-ui, sans-serif;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -7,4 +16,35 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.text-brand { color: var(--brand-primary); }
+.text-brand-accent { color: var(--brand-accent); }
+.bg-brand { background-color: var(--brand-primary); }
+.bg-brand:hover { background-color: var(--brand-primary-hover); }
+.bg-brand-muted { background-color: var(--brand-muted); }
+.border-brand { border-color: var(--brand-primary); }
+.ring-brand { --tw-ring-color: var(--brand-primary); }
+
+.hover\:text-brand:hover { color: var(--brand-primary); }
+.hover\:bg-brand:hover { background-color: var(--brand-primary); }
+.hover\:bg-brand-hover:hover { background-color: var(--brand-primary-hover); }
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+.animate-pulse-subtle {
+  animation: pulse-subtle 2.5s ease-in-out infinite;
 }

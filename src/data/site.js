@@ -26,4 +26,5 @@ export const NAV_ITEMS = [
   { path: '/obras', label: 'Nuestras Obras' },
   { path: '/ventas', label: 'Ventas y Maquinaria' },
   { path: '/vacantes', label: 'Bolsa de Trabajo' },
+  { path: '/cotizar', label: 'Cotizar' },
 ]

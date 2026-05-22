@@ -20,7 +20,7 @@ export default function ProjectCard({ obra }) {
           <MapPin className="h-4 w-4 mr-1 shrink-0" />
           {obra.ubicacion}
         </p>
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-50 text-blue-700 border border-blue-100">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-brand-muted text-brand border border-brand/20">
           {obra.estado}
         </span>
       </div>
